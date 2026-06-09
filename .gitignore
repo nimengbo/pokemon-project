@@ -1,0 +1,18 @@
+*.iml
+.gradle/
+.idea/
+.kotlin/
+build/
+*/build/
+local.properties
+.DS_Store
+.cxx/
+.externalNativeBuild/
+captures/
+*.apk
+*.aab
+*.keystore
+
+# Local Hermes working notes
+TODO.md
+WORK_LOG.md

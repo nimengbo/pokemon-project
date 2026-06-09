@@ -1,0 +1,12 @@
+query GetPokemonDetail($pokemonName: String!) {
+  pokemon_v2_pokemon(where: { name: { _eq: $pokemonName } }, limit: 1) {
+    id
+    name
+    pokemon_v2_pokemonabilities {
+      pokemon_v2_ability {
+        id
+        name
+      }
+    }
+  }
+}
