@@ -10,6 +10,7 @@ data class PokemonSearchUiState(
     val errorMessage: String? = null,
     val pageSize: Int = 20,
     val nextOffset: Int = 0,
+    val totalCount: Int = 0,
     val hasMore: Boolean = false,
     val hasSearched: Boolean = false,
 ) {

@@ -10,7 +10,9 @@ class SearchPokemonSpeciesUseCaseTest {
     @Test
     fun `trims query and wraps keyword for fuzzy search`() = kotlinx.coroutines.test.runTest {
         val repository = FakePokemonRepository().apply {
-            searchResult = AppResult.Success(PokemonSearchPage(emptyList(), limit = 20, offset = 0, hasMore = false))
+            searchResult = AppResult.Success(
+                PokemonSearchPage(emptyList(), limit = 20, offset = 0, totalCount = 0, hasMore = false),
+            )
         }
         val useCase = SearchPokemonSpeciesUseCase(repository)
 

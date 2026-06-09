@@ -18,11 +18,13 @@ object PokemonMapper {
                 pokemonNames = species.pokemon_v2_pokemons.map { it.name },
             )
         }
+        val totalCount = data.pokemon_v2_pokemonspecies_aggregate.aggregate?.count ?: items.size
         return PokemonSearchPage(
             items = items,
             limit = limit,
             offset = offset,
-            hasMore = items.size == limit,
+            totalCount = totalCount,
+            hasMore = offset + items.size < totalCount,
         )
     }
 

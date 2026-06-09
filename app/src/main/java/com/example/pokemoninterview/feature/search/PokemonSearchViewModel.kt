@@ -31,6 +31,7 @@ class PokemonSearchViewModel(
                     isInitialLoading = true,
                     errorMessage = null,
                     nextOffset = 0,
+                    totalCount = 0,
                     hasMore = false,
                     hasSearched = true,
                 )
@@ -41,6 +42,7 @@ class PokemonSearchViewModel(
                         items = result.data.items,
                         isInitialLoading = false,
                         nextOffset = result.data.offset + result.data.items.size,
+                        totalCount = result.data.totalCount,
                         hasMore = result.data.hasMore,
                     )
                 }
@@ -62,6 +64,7 @@ class PokemonSearchViewModel(
                         items = it.items + result.data.items,
                         isLoadingMore = false,
                         nextOffset = result.data.offset + result.data.items.size,
+                        totalCount = result.data.totalCount,
                         hasMore = result.data.hasMore,
                     )
                 }

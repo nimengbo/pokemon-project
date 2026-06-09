@@ -1,4 +1,11 @@
 query SearchPokemonSpecies($keyword: String!, $limit: Int!, $offset: Int!) {
+  pokemon_v2_pokemonspecies_aggregate(
+    where: { name: { _ilike: $keyword } }
+  ) {
+    aggregate {
+      count
+    }
+  }
   pokemon_v2_pokemonspecies(
     where: { name: { _ilike: $keyword } }
     order_by: { id: asc }

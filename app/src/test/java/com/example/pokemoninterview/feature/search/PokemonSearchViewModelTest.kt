@@ -49,6 +49,7 @@ class PokemonSearchViewModelTest {
                     items = listOf(PokemonSpecies(25, "pikachu", 190, "yellow", listOf("pikachu"))),
                     limit = 20,
                     offset = 0,
+                    totalCount = 1,
                     hasMore = false,
                 ),
             )
@@ -72,6 +73,7 @@ class PokemonSearchViewModelTest {
                     items = List(20) { PokemonSpecies(it, "species-$it", 1, "blue", listOf("pokemon-$it")) },
                     limit = 20,
                     offset = 0,
+                    totalCount = 21,
                     hasMore = true,
                 ),
             )
@@ -85,6 +87,7 @@ class PokemonSearchViewModelTest {
                 items = listOf(PokemonSpecies(99, "next", 1, "red", listOf("next"))),
                 limit = 20,
                 offset = 20,
+                totalCount = 21,
                 hasMore = false,
             ),
         )
@@ -94,6 +97,31 @@ class PokemonSearchViewModelTest {
 
         assertEquals(21, viewModel.uiState.value.items.size)
         assertEquals(21, viewModel.uiState.value.nextOffset)
+        assertFalse(viewModel.uiState.value.hasMore)
+    }
+
+    @Test
+    fun `full page stops pagination when total count is reached`() = runTest(dispatcher) {
+        val repository = FakePokemonRepository().apply {
+            searchResult = AppResult.Success(
+                PokemonSearchPage(
+                    items = List(20) { PokemonSpecies(it, "species-$it", 1, "blue", listOf("pokemon-$it")) },
+                    limit = 20,
+                    offset = 0,
+                    totalCount = 20,
+                    hasMore = false,
+                ),
+            )
+        }
+        val viewModel = createViewModel(repository)
+
+        viewModel.onQueryChanged("poke")
+        viewModel.onSearchClicked()
+        dispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(20, viewModel.uiState.value.items.size)
+        assertEquals(20, viewModel.uiState.value.nextOffset)
+        assertEquals(20, viewModel.uiState.value.totalCount)
         assertFalse(viewModel.uiState.value.hasMore)
     }
 
